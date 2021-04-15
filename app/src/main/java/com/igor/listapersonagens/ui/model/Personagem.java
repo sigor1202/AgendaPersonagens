@@ -6,10 +6,11 @@ import java.io.Serializable;
 
 public class Personagem implements Serializable {
 
-    private  String nome;
-    private  String altura;
-    private  String nascimento;
-    private  int id=0;
+    private String nome;
+    private String altura;
+    private String nascimento;
+    private int id = 0;
+
     //construtor
     public Personagem(String nome, String altura, String nascimento) {
         //set
@@ -18,6 +19,14 @@ public class Personagem implements Serializable {
         this.nascimento = nascimento;
     }
 
+    public Personagem() {
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return nome;
+    }
 
     public String getNome() {
         return nome;
@@ -43,18 +52,17 @@ public class Personagem implements Serializable {
         this.nascimento = nascimento;
     }
 
-    @NonNull
-    @Override
-    public  String toString(){
-        return nome;
+
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setId(int id){
-        this.id=id;
-    }
-
-    public int getId(){
+    public int getId() {
         return id;
+    }
+
+    public  boolean IdValido(){
+        return id>0;
     }
 
 }
