@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonagemDAO {
-
+    //cria a lista de personagens
     private final static List<Personagem> personagens = new ArrayList<>();
+    //variavel do id
     private static int contadorDeId = 1;
 
+    //função para salvar
     public void salva(Personagem personagemSalvo) {
         personagemSalvo.setId(contadorDeId);
         //adiciona as informaçoes recebidas a lista
@@ -18,11 +20,12 @@ public class PersonagemDAO {
 
 
     }
-
+    //adiciona um numero ao id
     private void atualizaId() {
         contadorDeId++;
     }
 
+    //verifica se a id é diferente de nulo e salva
     public void editar(Personagem personagem) {
         Personagem personagemEscolhido = BuscaPersonagemID(personagem);
         if (personagemEscolhido != null) {
@@ -30,11 +33,10 @@ public class PersonagemDAO {
             personagens.set(posicaoDoPersonagem, personagem);
         }
 
-
     }
 
+    //verifica qual o numero do id
     private Personagem BuscaPersonagemID(Personagem personagem) {
-
         for (Personagem p :
                 personagens) {
             if (p.getId() == personagem.getId())
@@ -49,4 +51,12 @@ public class PersonagemDAO {
 
     }
 
+    public void Remove(Personagem personagem) {
+        Personagem personagemDevolvido = BuscaPersonagemID(personagem);
+        if (personagemDevolvido != null) {
+            //remove o item selecionado
+            personagens.remove(personagemDevolvido);
+        }
+
+    }
 }

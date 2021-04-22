@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 
 public class Personagem implements Serializable {
-
+    //variaveis usadas no construtor
     private String nome;
     private String altura;
     private String nascimento;
@@ -18,7 +18,7 @@ public class Personagem implements Serializable {
         this.altura = altura;
         this.nascimento = nascimento;
     }
-
+    //construtor vazio
     public Personagem() {
     }
 

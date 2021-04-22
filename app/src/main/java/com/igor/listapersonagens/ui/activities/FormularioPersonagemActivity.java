@@ -16,28 +16,37 @@ import static com.igor.listapersonagens.ui.activities.ConstanteActivitis.CHAVE_P
 
 public class FormularioPersonagemActivity extends AppCompatActivity {
 
+    //constantes utilizadas no appbar
     public static final String TITULO_APPBAR_EDITA_PERSONAGEM = "editar personagens";
     public static final String TITULO_APPBAR_NOVO_PERSONAGEM = "novo personagens";
 
+     //variaveis de editText
     private EditText campoNome;
     private EditText campoAltura;
     private EditText campoNascimento;
+    //instancia a classe dao
     private final PersonagemDAO dao = new PersonagemDAO();
+    //instancia a classe personagem
     private Personagem personagem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        //pega o layout que esta sendo usado
         setContentView(R.layout.activity_formulario_personagem);
         //chama o metodo para configurar o botão
         inicializacaoDeCampos();
         //chama o metodo para inicializar os campos
         configuraBotaoSalvar();
+        //chama o metododo CarregaPersonagem
         CarregaPersonagem();
     }
 
     private void CarregaPersonagem() {
+
         Intent dados = getIntent();
+        //verifica se esta adicionando um personagem ou editando um existente
         if (dados.hasExtra(CHAVE_PERSONAGEM)) {
             setTitle(TITULO_APPBAR_EDITA_PERSONAGEM);
              personagem = (Personagem) dados.getSerializableExtra(CHAVE_PERSONAGEM);
@@ -50,6 +59,7 @@ public class FormularioPersonagemActivity extends AppCompatActivity {
     }
 
     private void preencherCampos() {
+        //prenche os campos
         campoNome.setText(personagem.getNome());
         campoAltura.setText(personagem.getAltura());
         campoNascimento.setText(personagem.getNascimento());
@@ -61,6 +71,7 @@ public class FormularioPersonagemActivity extends AppCompatActivity {
         //seta o onClick ao botão e instancia uma nova view
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
                 finalizarPersonagem();
 
@@ -68,7 +79,7 @@ public class FormularioPersonagemActivity extends AppCompatActivity {
         }
         );
     }
-
+    //salvar os dados
     private void finalizarPersonagem() {
         preencherPersonagem();
 
@@ -90,6 +101,7 @@ public class FormularioPersonagemActivity extends AppCompatActivity {
         campoNascimento = findViewById(R.id.editTextText_nascimento);
     }
 
+    //preenche o construtor
     private void preencherPersonagem(){
 
         //atribui o conteudo dos editText as variaveis
@@ -97,10 +109,10 @@ public class FormularioPersonagemActivity extends AppCompatActivity {
         String altura = campoAltura.getText().toString();
         String nascimento = campoNascimento.getText().toString();
 
+        //seta o conteudo no construtor
         personagem.setNome(nome);
         personagem.setAltura(altura);
         personagem.setNascimento(nascimento);
-
     }
 
 }
