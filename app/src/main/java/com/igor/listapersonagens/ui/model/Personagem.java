@@ -1,10 +1,16 @@
 package com.igor.listapersonagens.ui.model;
 
-public class Personagem {
+import androidx.annotation.NonNull;
 
-    private final String nome;
-    private final String altura;
-    private final String nascimento;
+import java.io.Serializable;
+
+public class Personagem implements Serializable {
+    //variaveis usadas no construtor
+    private String nome;
+    private String altura;
+    private String nascimento;
+    private int id = 0;
+
     //construtor
     public Personagem(String nome, String altura, String nascimento) {
         //set
@@ -12,17 +18,51 @@ public class Personagem {
         this.altura = altura;
         this.nascimento = nascimento;
     }
+    //construtor vazio
+    public Personagem() {
+    }
 
-    //getters
+    @NonNull
+    @Override
+    public String toString() {
+        return nome;
+    }
+
     public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getAltura() {
         return altura;
     }
 
+    public void setAltura(String altura) {
+        this.altura = altura;
+    }
+
     public String getNascimento() {
         return nascimento;
     }
+
+    public void setNascimento(String nascimento) {
+        this.nascimento = nascimento;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public  boolean IdValido(){
+        return id>0;
+    }
+
 }
