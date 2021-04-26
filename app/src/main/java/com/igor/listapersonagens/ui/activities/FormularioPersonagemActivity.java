@@ -2,12 +2,17 @@ package com.igor.listapersonagens.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.igor.listapersonagens.R;
 import com.igor.listapersonagens.ui.dao.PersonagemDAO;
 import com.igor.listapersonagens.ui.model.Personagem;
@@ -28,6 +33,22 @@ public class FormularioPersonagemActivity extends AppCompatActivity {
     private final PersonagemDAO dao = new PersonagemDAO();
     //instancia a classe personagem
     private Personagem personagem;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_formulario_personagem_menu_salvar,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if(itemId == R.id.activity_formulario_personagem_menu_salvar){
+            finalizarFormulario();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,32 +94,44 @@ public class FormularioPersonagemActivity extends AppCompatActivity {
             @Override
 
             public void onClick(View view) {
-                finalizarPersonagem();
+                finalizarFormulario();
 
             }
         }
         );
     }
     //salvar os dados
-    private void finalizarPersonagem() {
-        preencherPersonagem();
+    private void finalizarFormulario() {
 
+        preencherPersonagem();
+        //verifica se e valido
         if(personagem.IdValido()){
             dao.editar(personagem);
             finish();
         }
+        //salva
         else {
             dao.salva(personagem);
         }
+        //finaliza
         finish();
     }
 
-    //metodo para inicializar os campos
+    //metodo para inicializar os campos e criar as mascaras para formatos especificos
     private void inicializacaoDeCampos() {
         //cria as variaveis para receber os respectivos itens dos editText
         campoNome = findViewById(R.id.editTextText_nome);
         campoAltura = findViewById(R.id.editTextText_altura);
         campoNascimento = findViewById(R.id.editTextText_nascimento);
+        //formata o campoAltura
+        SimpleMaskFormatter smfAltura = new SimpleMaskFormatter("N,NN");
+        MaskTextWatcher mtwAltura = new MaskTextWatcher(campoAltura, smfAltura);
+        campoAltura.addTextChangedListener(mtwAltura);
+        //formata o campoNascimento
+        SimpleMaskFormatter smfNascimento = new SimpleMaskFormatter("NN/NN/NNNN");
+        MaskTextWatcher mtwNascimento = new MaskTextWatcher(campoNascimento, smfNascimento);
+        campoNascimento.addTextChangedListener(mtwNascimento);
+
     }
 
     //preenche o construtor
